@@ -6,8 +6,13 @@ app.use(helmet.hidePoweredBy());
 app.use(helmet.frameguard({ action: 'deny' }));
 app.use(helmet.xssFilter());
 app.use(helmet.noSniff());
+app.use(helmet.ieNoOpen());
 
+const timeInSeconds = 90*24*60*60;
+app.use(helmet.hsts({
+  maxAge: timeInSeconds, force: true}));
 
+app.use(helmet.dnsPrefetchControl());
 
 
 
@@ -50,6 +55,6 @@ app.get("/", function (request, response) {
 });
 let PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Useful Programmer Information Security App Started on Port ${PORT}`);
+  console.log(`😉 Useful Programmer Information Security App Started on Port ${PORT}`);
 });
 
